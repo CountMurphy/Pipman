@@ -4,7 +4,7 @@ CON
   _xinfreq=5_000_000
 
 PUB main  :upSig | isUp
-'upSig is for IDing when track ball pules for up
+'upSig is for IDing when track ball pulses for up
 'isUp is to indicate to screen move cursor up
 dira[ledpin]:=1
 dira[7]:=1
