@@ -1,15 +1,34 @@
 obj
   serial : "Simple_Serial.spin"
+  rtc : "DS1302.spin"
+  SN : "Simple_Numbers.spin"
 
 'Remove this for final
 CON
   _clkmode=xtal1+pll16x
   _xinfreq=5_000_000
 
+var
+  long hour, minute, seconds
 pub main
+
   serial.init(31,30,9600)
   'waitcnt((clkfreq+cnt)*5)
+  rtc.init(17,16,18)
+  rtc.config
+  rtc.setDatetime(01,17,07,3,5,59,50)
+  seconds:=12
   repeat
-    serial.str(string("test"))
     waitcnt(clkfreq+cnt)
+    rtc.readTime(@hour,@minute,@seconds)
+    serial.str(string(" ",13))
+    serial.str(SN.decx(hour,2))
+    serial.str(string(":"))
+    serial.str(SN.decx(minute,2))
+    serial.str(string(":"))
+    serial.str(SN.decx(seconds,2))
 
+
+'http://playground.arduino.cc/Main/DS1302
+'http://forums.parallax.com/showthread.php?128184-Serial-Objects-for-SPIN-Programming
+'http://forums.parallax.com/showthread.php?132400-Copy-a-part-of-a-string-to-a-new-string
