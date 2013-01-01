@@ -6,6 +6,7 @@ CON
 
 obj
   serial : "Simple_Serial.spin"
+  conv : "Simple_Numbers.spin"
 
 pub main
   dira[21]:=1
@@ -13,7 +14,7 @@ pub main
   waitcnt(clkfreq+cnt)
   waitcnt(clkfreq+cnt)
   outa[21]:=1
-  serial.init(_GPSData,30,9600)
+  serial.init(_GPSData,30,4800)
   'dont forget to finalize after reading is done
   repeat
     serial.tx(serial.rx)
