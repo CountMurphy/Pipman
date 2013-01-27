@@ -8,6 +8,7 @@ obj
   serial : "Simple_Serial"
   SN : "Simple_Numbers"
   gps : "GPS_IO_mini"
+  Maths : "FloatMath"
 
 pub main
   dira[_GPSPwr]:=1
@@ -20,4 +21,5 @@ pub main
   serial.init(1,30,4800)
   'dont forget to finalize after reading is done
   repeat
-    serial.str(gps.date)
+    if Maths.FRound(gps.satellites) > 0
+      serial.str(gps.satellites)
