@@ -10,6 +10,8 @@ obj
   gps : "GPS_IO_mini"
   Maths : "FloatMath"
 
+var
+  long sats
 pub main
   dira[_GPSPwr]:=1
   'wait 2 secs, power on GPS
@@ -21,5 +23,18 @@ pub main
   serial.init(1,30,4800)
   'dont forget to finalize after reading is done
   repeat
-    if Maths.FRound(gps.satellites) > 0
-      serial.str(gps.satellites)
+    sats:= StrToDec(gps.satellites)
+    if sats >= 3
+      serial.str(SN.dec(sats))
+
+
+pri StrToDec(stringptr) : value | char, index, multiply
+
+    '' Converts a zero terminated string representation of a decimal number to a value
+
+    value := index := 0
+    repeat until ((char := byte[stringptr][index++]) == 0)
+       if char => "0" and char =< "9"
+          value := value * 10 + (char - "0")
+    if byte[stringptr] == "-"
+       value := - value
