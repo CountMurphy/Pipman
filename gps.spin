@@ -38,7 +38,7 @@ pub main
       'serial.str(string("    "))
 
 
-      'serial.str(fs.FloatToString(tz.ConvertToSTD(string("1057.4999"))))
+      serial.str(SN.dec(tz.GetTimeZone(gps.longitude,gps.E_W)))
       serial.str(string("    "))
 
 
