@@ -44,18 +44,44 @@ pub GetTimeZone(lon,E_W) | decVal,offset
     offset:=offset*-1
   return offset
 
-'Takes string Longitude and converts it to a float Google Maps can use
-pub ConvertToSTD(Coord) | intVal, tests
+'Takes string Longitude and converts it to a float Google Maps can use, should be in new class?
+pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, divisor,intCoord, remainLen,MathCoord,RetVal
   'hokay,if coordinate is 12151.2774W, do this:
   '121+(51.2774/60) //seperate by last 2 digits left of decimal
   ' =121.854623333
   'then * -1 because we are in Western Hemisphere
 
-  'despite its horrid name, this really just converts to int
-  intVal:=cn.Convert_ascii_string_to_fp(Coord)
-  tests:=fm.FDiv(51.2774,60)'notes...theres no way to div 51.2774/60
-  return tests
+  RetVal:=string(" ")
 
+  DecPos:=CheckDecVal(Coord)
+  '51.2774/.000006=85462333333. Real ans is .85462333333333333333333333333333
+  'need to go back from DecPos 2 left. intify it, run form.
+  intCoord:=cn.Convert_ascii_string_to_fp(Coord)
+  intValMain:=GetRegion(intCoord,DecPos)
+  if cn.Convert_ascii_string_to_fp(str.Parse(str.StrRev(SN.dec(intCoord)),4,1)) > 5
+    intValMain:=intValMain - 1
+
+  'for the remainder, get string len of master, minus intValMain. then parse.
+  remainLen:=StrSize(Coord)
+  remainLen:=remainLen-StrSize(SN.dec(intValMain))
+  'remove Decimal point
+  remainLen:=remainLen-1
+  intValRemainder:=cn.Convert_ascii_string_to_fp(str.StrRev(str.Parse(str.StrRev(SN.dec(intCoord)),0,remainLen)))
+
+  'if DecPos==4
+    MathCoord:=fm.FDiv(intValRemainder,0.06)
+  if StrComp(Direction,string("W")) or StrComp(Direction,string("S"))
+    RetVal:=string("-")
+  'RetVal:=str.Concatenate(RetVal,intValMain)
+  'RetVal:=str.Concatenate(RetVal,string("."))
+  'RetVal:=str.Concatenate(RetVal,MathCoord)
+  'RetVal:=string("TEST")
+  'return RetVal
+  serial.init(1,30,4800)
+  serial.str(RetVal)
+  serial.str(SN.dec(intValMain))
+  serial.str(string("."))
+  serial.str(SN.dec(MathCoord))
 
 
 'Takes coordinate, strip off decimal values and calculates timeZone Region
