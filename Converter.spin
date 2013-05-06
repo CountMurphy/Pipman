@@ -1,6 +1,5 @@
 obj
   fm : "FloatMath"
-
 var
   long fp_number
 
@@ -8,6 +7,8 @@ DAT
 
 divisors      long      1.0, 10.0, 100.0, 1_000.0, 10_000.0, 100_000.0
               long      1_000_000.0, 10_000_000.0
+
+
 
 pub StrToDec(stringptr) : value | char, index, multiply
 
@@ -50,5 +51,28 @@ pub Convert_ascii_string_to_fp(address) | c, d, dp, pos_sign, neg_sign
   if neg_sign                     ' if neg_sign true then negate the number
     fp_number := fm.fneg(fp_number)
 
+pub DateToDOW(month,day,year)| dow,modMonth
+  'convert month to table data
+  case month
+    1,10: modMonth:=0
+    2,3,11: modMonth:=3
+    4,7: modMonth:=6
+    5: modMonth:=1
+    8: modMonth:=2
+    6: modMonth:=4
+    12: modMonth:=5
+  if isLeapYear(year)
+    'modify if jan or feb
+    case month
+      1: modMonth:=-1
+      2: modMonth:=2
+  dow:=day+modMonth+year+(year/4)+6
+  dow:=dow//7
+  return dow
 
+pri isLeapYear(year)
+  if year//4 ==0
+    return true
+  else
+    return false
 
