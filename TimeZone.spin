@@ -3,7 +3,7 @@ obj
   fm : "FloatMath"
   Str: "STRINGS2"
   SN : "Simple_Numbers"
-
+  SC:"Screen"
   serial : "Simple_Serial"
 
 pub GetTimeZone(lon,E_W) | decVal,offset
@@ -45,7 +45,9 @@ pub GetTimeZone(lon,E_W) | decVal,offset
   return offset
 
 'Takes string Longitude and converts it to a float Google Maps can use, should be in new class?
-pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, divisor,intCoord, remainLen,MathCoord,RetVal
+'because of this functions hacky nature, I cannot save the concat strings.  I can directly print though
+'Even though I know this is Uber wrong on many levels, I am calling the hardware directly here.  May God Forgive me.
+pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, divisor,intCoord, remainLen,MathCoord,RetVal,FINAL
   'hokay,if coordinate is 12151.2774W, do this:
   '121+(51.2774/60) //seperate by last 2 digits left of decimal
   ' =121.854623333
@@ -77,11 +79,17 @@ pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, di
   'RetVal:=str.Concatenate(RetVal,MathCoord)
   'RetVal:=string("TEST")
   'return RetVal
-  serial.init(1,30,4800)
-  serial.str(RetVal)
-  serial.str(SN.dec(intValMain))
-  serial.str(string("."))
-  serial.str(SN.dec(MathCoord))
+  'FINAL:=string(" ")
+  'FINAL:=Str.Concatenate(RetVal,SN.dec(intValMain))
+  'FINAL:=Str.Concatenate(FINAL,string("."))
+  'FINAL:=Str.Concatenate(FINAL,SN.dec(MathCoord))
+  'return FINAL
+  'serial.init(1,30,4800)
+  SC.Init
+  SC.Print(RetVal)
+  SC.Print(SN.dec(intValMain))
+  SC.Print(string("."))
+  SC.Print(SN.dec(MathCoord))
 
 
 'Takes coordinate, strip off decimal values and calculates timeZone Region

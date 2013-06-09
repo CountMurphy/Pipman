@@ -1,5 +1,5 @@
 obj
-  serial : "Simple_Serial.spin"
+  SC : "Screen"
   rtc : "DS1302.spin"
   SN : "Simple_Numbers.spin"
 
@@ -12,21 +12,23 @@ var
   long hour, minute, seconds
 pub main
 
-  serial.init(31,30,9600)
+  SC.Init
   'waitcnt((clkfreq+cnt)*5)
   rtc.init(17,16,18)
   rtc.config
   rtc.setDatetime(01,17,07,3,5,59,50)
   seconds:=12
+  SC.Init
+  SC.On
   repeat
     waitcnt(clkfreq+cnt)
     rtc.readTime(@hour,@minute,@seconds)
-    serial.str(string(" ",13))
-    serial.str(SN.decx(hour,2))
-    serial.str(string(":"))
-    serial.str(SN.decx(minute,2))
-    serial.str(string(":"))
-    serial.str(SN.decx(seconds,2))
+    SC.print(string(" ",13))
+    SC.print(SN.decx(hour,2))
+    SC.print(string(":"))
+    SC.print(SN.decx(minute,2))
+    SC.print(string(":"))
+    SC.print(SN.decx(seconds,2))
 
 
 'http://playground.arduino.cc/Main/DS1302
