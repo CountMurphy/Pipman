@@ -21,7 +21,6 @@ PUB Run  :upSig | downSig,rightSig,leftSig
 'upSig is for IDing when track ball pulses for up
 'upStatus is to indicate to screen move cursor up
   dira[ledpin]:=1
-  outa[ledpin]:=1
   leftStatus:=false
   rightStatus:=false
   downStatus:=false
@@ -73,7 +72,11 @@ PUB Run  :upSig | downSig,rightSig,leftSig
     pressedStatus:=true
   else
     pressedStatus:=false
+pub LEDOn
+  outa[ledpin]:=1
 
+pub KillLed
+  outa[ledpin]:=0
 pub isPressed
   return pressedStatus
 

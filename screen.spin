@@ -74,6 +74,11 @@ pub FontSize(size)
   serial.tx(00)
   serial.tx(size)
   WaitForComplete
+  serial.tx($FF)
+  serial.tx($7C)
+  serial.tx($00)
+  serial.tx(size)
+  WaitForComplete
 
 pub Position(line,col)
   serial.tx($FF)
@@ -183,6 +188,13 @@ pub SetSectorAddr(High1,High2,Low1,Low2)
   serial.tx(High2)
   serial.tx(Low1)
   serial.tx(Low2)
+  WaitForComplete
+
+pub TxtBackColor(hex1,hex2)
+  serial.tx($FF)
+  serial.tx($7E)
+  serial.tx(hex1)
+  serial.tx(hex2)
   WaitForComplete
 
 pri WaitForComplete

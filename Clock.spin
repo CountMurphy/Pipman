@@ -12,23 +12,23 @@ var
   long hour, minute, seconds
 pub main
 
-  SC.Init
+ ' SC.Init
   'waitcnt((clkfreq+cnt)*5)
   rtc.init(17,16,18)
   rtc.config
   rtc.setDatetime(01,17,07,3,5,59,50)
   seconds:=12
-  SC.Init
-  SC.On
-  repeat
-    waitcnt(clkfreq+cnt)
-    rtc.readTime(@hour,@minute,@seconds)
-    SC.print(string(" ",13))
-    SC.print(SN.decx(hour,2))
-    SC.print(string(":"))
-    SC.print(SN.decx(minute,2))
-    SC.print(string(":"))
-    SC.print(SN.decx(seconds,2))
+ ' SC.Init
+ ' SC.On
+ ' repeat
+ '   waitcnt(clkfreq+cnt)
+ '   rtc.readTime(@hour,@minute,@seconds)
+ '   SC.print(string(" ",13))
+ '   SC.print(SN.decx(hour,2))
+ '   SC.print(string(":"))
+ '   SC.print(SN.decx(minute,2))
+ '   SC.print(string(":"))
+ '   SC.print(SN.decx(seconds,2))
 
 
 'http://playground.arduino.cc/Main/DS1302

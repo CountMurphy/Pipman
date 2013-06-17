@@ -12,6 +12,8 @@ obj
   SC : "Screen"
   TC : "trackBallEx"
   GPMenu : "gpsMenu"
+  'CP : "ClockPage"
+  Sen : "Sensors"
 
 var
   long  currentItem
@@ -21,6 +23,7 @@ pub main: canExit
   SC.On
   SC.Clear
   SC.TxtColor($FF,$E0)
+  SC.TxtBackColor($00,$00)
   SC.Position(4,4)
   SC.Print(string("Clock"))
   SC.Position(4,14)
@@ -33,6 +36,7 @@ pub main: canExit
   SC.print(string("Comm"))
   SC.Position(12,14)
   SC.print(string("Edit"))
+  Sen.StandBy
 
   SC.DrawRec(70,45,25,25,$F8,$00)
   currentItem:=clock
@@ -85,11 +89,12 @@ pub main: canExit
       canExit:=true
 
 
-  if currentItem==nav
-    GPMenu.main
-  else
-    SC.FadeOut
-    SC.Off 'the double tap
+  case currentItem
+    nav:GPMenu.main
+    clock:return 1
+
+  'SC.FadeOut
+  'SC.Off 'the double tap
 
 pri DrawItem
   case currentItem
