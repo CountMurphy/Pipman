@@ -45,8 +45,6 @@ pub main| month,day,dow,year,hour,minute,second,go
     '  go:=true
 
 
-  MN.Main
-
 pri ShowScreen(day,month,year,hour,minute,second,dow)| exitCode
   SC.FadeIn
   SC.ShowFrame(1) 'cant display wallpaper unless this is access first.  Odd

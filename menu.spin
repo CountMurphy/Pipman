@@ -14,6 +14,7 @@ obj
   GPMenu : "gpsMenu"
   'CP : "ClockPage"
   Sen : "Sensors"
+  Ed  : "Edit"
 
 var
   long  currentItem
@@ -92,6 +93,8 @@ pub main: canExit
   case currentItem
     nav:GPMenu.main
     clock:return 1
+    edit: Ed.main
+  return 1
 
   'SC.FadeOut
   'SC.Off 'the double tap

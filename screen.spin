@@ -197,6 +197,25 @@ pub TxtBackColor(hex1,hex2)
   serial.tx(hex2)
   WaitForComplete
 
+pub DrawTri(X1,Y1,X2,Y2,X3,Y3,color1,color2)
+  serial.tx($FF)
+  serial.tx($C9)
+  serial.tx($00)
+  serial.tx(X1)
+  serial.tx($00)
+  serial.tx(Y1)
+  serial.tx($00)
+  serial.tx(X2)
+  serial.tx($00)
+  serial.tx(Y2)
+  serial.tx($00)
+  serial.tx(X3)
+  serial.tx($00)
+  serial.tx(Y3)
+  serial.tx(color1)
+  serial.tx(color2)
+  WaitForComplete
+
 pri WaitForComplete
   return serial.rx
 
