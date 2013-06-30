@@ -15,6 +15,7 @@ obj
   'CP : "ClockPage"
   Sen : "Sensors"
   Ed  : "Edit"
+  TR  : "timer"
 
 var
   long  currentItem
@@ -94,6 +95,7 @@ pub main: canExit
     nav:GPMenu.main
     clock:return 1
     edit: Ed.main
+    timer: TR.main
   return 1
 
   'SC.FadeOut

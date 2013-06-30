@@ -137,7 +137,7 @@ pub Beep
   serial.tx($DA)
   'note
   serial.tx(00)
-  serial.tx($2D)
+  serial.tx($40)
   'duration
   serial.tx($03)
   serial.tx($E8)'one sec
