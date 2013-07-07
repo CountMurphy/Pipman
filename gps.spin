@@ -22,7 +22,7 @@ pub Init
   cog:=gps.start
   'start
   'dont forget to finalize after reading is done
-   serial.init(31,30,9600)
+  ' serial.init(31,30,9600)
   'repeat
   '  sats:= cn.StrToDec(gps.satellites)
    ' if sats => 3
@@ -51,6 +51,8 @@ pub PrintStdLat
   return tz.PrintConvertCoord(GPS.Latitude,GPS.N_S)
 pub PrintStdLong
   return tz.PrintConvertCoord(GPS.Longitude,GPS.E_W)
+pub PrintAlt
+  return gps.Altitude
 pub Kill
   cogstop(cog)
   outa[_GPSPwr]:=0

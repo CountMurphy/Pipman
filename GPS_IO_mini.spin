@@ -13,7 +13,7 @@ CON
 
   CR = 13                                               ' ASCII <CR>
   LF = 10                                               ' ASCII <LF>
-  serXmit   = 1                                         ' Serial Transmit on mouse
+  serXmit   = 28'bull shit pin                                         ' Serial Transmit on mouse
   serRecv   = 20                                         ' Serial Receive  on mouse
   
 VAR  

@@ -30,7 +30,10 @@ pub main| canExit
   SC.DrawRec(70,45,25,25,$F8,$00)
   currentItem:=single
   canExit:=false
-
+  TC.Run
+  if TC.isPressed == true
+    repeat until TC.isPressed==false
+      TC.Run
   repeat until canExit==true
     TC.Run
 
@@ -69,22 +72,68 @@ pub main| canExit
 
 
     if TC.isPressed == true
+      TC.Run
+      repeat until TC.isPressed==false
+        'do nothing
+        TC.Run
       case currentItem
         single:
          GPS.Init
          'SC.Print(SN.dec(GPS.SatCount))
          SC.FadeOut
          repeat until GPS.SatCount => 3
-          'SC.Print(SN.dec(GPS.SatCount))
+           TC.Run
+             if TC.isPressed ==true
+               quit
          SC.FadeIn
          SC.Clear
          'SC.Print(SN.dec(GPS.SatCount))
-         SC.Print(GPS.Latitude)
-         SC.Print(GPS.NS)
-         SC.Position(1,0)
-         SC.Print(GPS.Longitude)
-         SC.Print(GPS.EW)
+         Print
          GPS.Kill
+         return
+        save:
+          GPS.Init
+          SC.FadeOut
+          repeat until GPS.SatCount=>3
+            'Do nothing
+            TC.Run
+            if TC.isPressed ==true
+              GPS.Kill
+              quit
+          SC.FadeIn
+          SC.Clear
+          'prepare card
+          SC.MediaInit
+          SC.SetByteAddr($00,$00,$00,$00)
+          SC.ShowFrame(15)
+          SC.SetSectorGPS
+          Print
+          'Save that mother
+          SaveData
+          SC.Flush
+          GPS.Kill
+        track:
+          SC.SetByteAddr($00,$00,$00,$00)
+          TC.Run
+          GPS.Init
+          SC.ShowVideo
+          SC.SetSectorGPS
+          waitcnt(clkfreq+cnt)
+          TC.Run
+          repeat until TC.isPressed ==true
+            TC.Run
+            repeat until GPS.SatCount=>3
+              'Do nothing
+              TC.Run
+              if TC.isPressed ==true
+                quit
+            SaveData
+            'wait a minute, a really hacky wait a minute
+            'should be in own cog
+            'repeat 60
+             ' waitcnt(clkfreq+cnt)
+          SC.Flush
+          GPS.Kill
         google:
           GPS.Init
          'SC.Print(SN.dec(GPS.SatCount))
@@ -99,6 +148,21 @@ pub main| canExit
          GPS.Kill
       canExit:=true
 
+pri SaveData
+  SC.SaveStr(string("$Lat:"))
+  SC.SaveStr(GPS.Latitude)
+  SC.SaveStr(GPS.NS)
+  SC.SaveStr(string("$Lon:"))
+  SC.SaveStr(GPS.Longitude)
+  SC.SaveStr(GPS.EW)
+  SC.SaveStr(string("$Alt:"))
+  SC.SaveStr(GPS.PrintAlt)
+pri Print
+  SC.Print(GPS.Latitude)
+  SC.Print(GPS.NS)
+  SC.Position(1,0)
+  SC.Print(GPS.Longitude)
+  SC.Print(GPS.EW)
 pri DrawItem
   case currentItem
     single: SC.DrawRec(70,45,25,25,$F8,$00)

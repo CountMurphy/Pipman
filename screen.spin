@@ -1,9 +1,11 @@
 CON
   _clkmode=xtal1+pll16x
   _xinfreq=5_000_000
+  gpsDataCache=$2FAF0 '100 megs into the card
 obj
   serial : "Simple_Serial"
   SN     : "Simple_Numbers"
+  Str    : "STRINGS2"
 
 
 'All of this could probably use a refactoring, but not sure if worth the effort.  have a deadline
@@ -26,10 +28,10 @@ pub MediaInit
   serial.tx($B1)
   WaitForComplete
 
-pub Print(str)
+pub Print(data)
   serial.tx($00)
   serial.tx($06)
-  serial.str(str)
+  serial.str(data)
   'null terminate this bitch
   serial.tx($00)
   WaitForComplete
@@ -216,6 +218,55 @@ pub DrawTri(X1,Y1,X2,Y2,X3,Y3,color1,color2)
   serial.tx(color2)
   WaitForComplete
 
+pub SetSectorGPS
+  SetByteAddr($0C,$80,$00,$00)
+
+'ONLY CALL AFTER SET SECTOR COMMAND!
+'for set, take size in bytes, pad with 512ish (leftover sector) add next item
+'512 sector size
+pub SaveStr(data)|count
+  repeat strsize(data)
+    WriteByte(byte[data++])
+
+pub flush
+  serial.tx($FF)
+  serial.tx($B2)
+  WaitForComplete
+  WaitForComplete
+  WaitForComplete
+
+pub ReadByte
+  serial.tx($FF)
+  serial.tx($B7)
+'  Print(SN.hex(WaitForComplete,2))'general ok
+'  Print(SN.hex(WaitForComplete,2))'data1
+'  Print(SN.hex(WaitForComplete,2))'data2
+  if serial.rx ==$06
+    serial.rx
+    return SN.hex(serial.rx,2)
+  else
+    return string("IO Error")
+
 pri WaitForComplete
   return serial.rx
+
+pri WriteByte(char)| retval1,retval2,retval3
+  if char <> 0
+    serial.tx($FF)
+    serial.tx($B5)
+    serial.tx($00)
+    serial.tx(char)
+   'if serial.rx ==$06
+    'serial.rx
+    'Print(SN.hex(serial.rx,2))
+    retval1:=WaitForComplete
+    retval2:=WaitForComplete
+    retval3:=WaitForComplete
+    Print(SN.hex(char,2))
+'    Print(SN.hex(retval1,2))
+'    Print(SN.hex(retval2,2))
+'    Print(SN.hex(retval3,2))
+  else
+    Print(string("nulled out"))
+
 

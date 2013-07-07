@@ -133,6 +133,8 @@ pub main | curPOS, runSw,runCd
               if curMode == sw
                 init
               else
+                hour:=1
+                minute:=0
                 CDInit
               curPOS:=run
             menu:
