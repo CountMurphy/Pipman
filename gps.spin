@@ -56,4 +56,7 @@ pub PrintAlt
 pub Kill
   cogstop(cog)
   outa[_GPSPwr]:=0
-
+pub ProcessLocalDateTime(DST)
+  repeat until cn.StrToDec(gps.satellites) => 3
+    waitcnt(clkfreq+cnt)
+  repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1

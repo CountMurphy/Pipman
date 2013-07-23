@@ -70,7 +70,7 @@ pub DateToDOW(month,day,year)| dow,modMonth
   dow:=dow//7
   return dow
 
-pri isLeapYear(year)
+pub isLeapYear(year)
   if year//4 ==0
     return true
   else

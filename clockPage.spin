@@ -11,6 +11,7 @@ obj
   SN : "Simple_Numbers"
   MN : "Menu"
   TC : "trackBallEx"
+  GPS : "gps"
 var
   long timer
 
@@ -18,13 +19,16 @@ pub main| month,day,dow,year,hour,minute,second,go
   SC.Init
   SC.On
 
-  'set clock
-  SetClock
+  SC.ShowFrame(1)
+  SC.Clear
+  'Set DST and get current local datetime
   day:=0
   month:=0
   year:=0
   timer:=0
+  DSTConfig
   go:=true
+  rtc.init(17,16,18)
   repeat
     TC.Run
     if TC.isPressed
@@ -101,8 +105,39 @@ pri ShowScreen(day,month,year,hour,minute,second,dow)| exitCode
         ShowScreen(day,month,year,hour,minute,second,dow)
    ' waitcnt(clkfreq+cnt)
 
-pri SetClock| dow
-  rtc.init(17,16,18)
-  rtc.config
-  dow:=Conver.DateToDOW(06,16,13)
-  rtc.setDatetime(06,16,13,dow,5,59,50)
+
+pri DSTConfig| DST
+  SC.TxtColor($FF,$E0)
+  SC.Position(0,7)
+  SC.Print(string("is DST?"))
+  SC.Position(7,4)
+  SC.FontSize(2)
+  SC.Print(string("Yes  No"))
+  SC.FontSize(1)
+  TC.LEDOn
+  SC.DrawRec(75,75,25,50,$F8,$00)
+  DST:=true
+  repeat
+    TC.Run
+    if TC.isPressed==true
+      repeat until TC.isPressed==false
+        TC.Run
+      SC.Clear
+      gps.init
+   '   SC.ShowVideo
+      SC.Clear
+      gps.ProcessLocalDateTime(DST)
+      'SC.FadeOut
+      gps.kill
+      TC.KillLed
+      quit
+
+    if TC.isRight == true
+      SC.DrawRec(75,75,25,50,$00,$00)
+      SC.DrawRec(90,75,130,50,$F8,$00)
+      DST:=false
+
+    if TC.isLeft == true
+      SC.DrawRec(75,75,25,50,$F8,$00)
+      SC.DrawRec(90,75,130,50,$00,$00)
+      DST:=true
