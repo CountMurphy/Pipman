@@ -124,10 +124,10 @@ pri DSTConfig| DST
         TC.Run
       SC.Clear
       gps.init
-   '   SC.ShowVideo
+      'SC.ShowVideo
       SC.Clear
       gps.ProcessLocalDateTime(DST)
-      'SC.FadeOut
+      SC.FadeOut
       gps.kill
       TC.KillLed
       quit
