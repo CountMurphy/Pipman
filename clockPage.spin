@@ -127,6 +127,7 @@ pri DSTConfig| DST
       'SC.ShowVideo
       SC.Clear
       gps.ProcessLocalDateTime(DST)
+      waitcnt(clkfreq+cnt)
       SC.FadeOut
       gps.kill
       TC.KillLed
