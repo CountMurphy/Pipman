@@ -27,14 +27,14 @@ VAR
    long Null[1]
    
 OBJ
-  uart :  "FullDuplexSerial_mini"
+  uart :  "Simple_Serial"
 
 PUB start : okay
 
 '' Starts uart object (at baud specified) in a cog
 '' -- returns false if no cog available
 
-  okay := uart.start(serRecv,serXmit,0,4800)
+  okay := uart.init(serRecv,serXmit,4800)
   return cog := cognew(readNEMA,@gps_stack) + 1 
 
 PUB readNEMA
