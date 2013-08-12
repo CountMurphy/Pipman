@@ -6,6 +6,7 @@ obj
   serial : "Simple_Serial"
   SN     : "Simple_Numbers"
   Str    : "STRINGS2"
+  TC :  "TrackBallEx"
 
 
 'All of this could probably use a refactoring, but not sure if worth the effort.  have a deadline
@@ -268,5 +269,4 @@ pri WriteByte(char)| retval1,retval2,retval3
 '    Print(SN.hex(retval3,2))
   else
     Print(string("nulled out"))
-
 

@@ -14,7 +14,8 @@ obj
 var
   long  currentItem
 
-pub main| canExit
+pub main| canExit,frame
+  frame:=0
   SC.Init
   SC.Clear
   SC.TxtColor($FF,$E0)
@@ -79,12 +80,22 @@ pub main| canExit
       case currentItem
         single:
          GPS.Init
+         SC.SetByteAddr($00,$00,$00,$00)
          'SC.Print(SN.dec(GPS.SatCount))
-         SC.FadeOut
+         'SC.FadeOut
          repeat until GPS.SatCount => 3
            TC.Run
              if TC.isPressed ==true
-               quit
+               SC.FadeIn
+               SC.Clear
+               GPS.Kill
+               return
+             else
+               if frame < 500
+                 SC.ShowFrame(frame)
+                 frame++
+               else
+                 SC.FadeOut
          SC.FadeIn
          SC.Clear
          'SC.Print(SN.dec(GPS.SatCount))
@@ -138,9 +149,27 @@ pub main| canExit
         google:
           GPS.Init
          'SC.Print(SN.dec(GPS.SatCount))
-          SC.FadeOut
+          SC.Clear
+          SC.Print(string("Warning, not accurate"))
+          SC.Position(1,0)
+          SC.Print(string("up to 50 meters"))
+          SC.Position(0,0)
+          waitcnt(clkfreq+cnt)
+          waitcnt(clkfreq+cnt)
+          SC.Clear
+          SC.SetByteAddr($00,$00,$00,$00)
           repeat until GPS.SatCount => 3
             'SC.Print(SN.dec(GPS.SatCount))
+            TC.Run
+             if TC.isPressed ==true
+               quit
+             else
+               if frame < 500
+                 SC.ShowFrame(frame)
+                 frame++
+               else
+                 SC.FadeOut
+
          SC.FadeIn
          SC.Clear
          GPS.PrintStdLat

@@ -12,8 +12,10 @@ obj
   MN : "Menu"
   TC : "trackBallEx"
   GPS : "gps"
+  fd  : "FullDuplexSerial"
 var
   long timer
+  long stack[20]
 
 pub main| month,day,dow,year,hour,minute,second,go
   SC.Init
@@ -115,7 +117,7 @@ pri DSTConfig| DST
   SC.FontSize(2)
   SC.Print(string("Yes  No"))
   SC.FontSize(1)
-  TC.LEDOn
+ TC.LEDOn
   SC.DrawRec(75,75,25,50,$F8,$00)
   DST:=true
   repeat
@@ -125,7 +127,7 @@ pri DSTConfig| DST
         TC.Run
       SC.Clear
       gps.init
-      'SC.ShowVideo
+      SC.ShowVideo
       SC.Clear
       gps.ProcessLocalDateTime(DST)
       waitcnt(clkfreq+cnt)
