@@ -56,8 +56,8 @@ pri ShowScreen(day,month,year,hour,minute,second,dow)| exitCode
   SC.SetByteAddr(Config.Wallpaper(0),Config.Wallpaper(1),Config.Wallpaper(2),Config.Wallpaper(3))
   SC.DisplayImage
   Sen.Resume
-  SC.TxtBackColor($D3,$C4)
   repeat until timer =>50
+    SC.TxtBackColor($D3,$C4)
     SC.TxtColor($00,$00)
     'Print temp
     SC.Position(0,0)
@@ -89,6 +89,7 @@ pri ShowScreen(day,month,year,hour,minute,second,dow)| exitCode
     SC.Position(7,3)
     SC.FontSize(2)
     Rtc.readTime(@hour,@minute,@second)
+    SC.TxtBackColor($00,$00)
     SC.Print(SN.decx(hour,2))
     SC.Print(string(":"))
     SC.Print(SN.decx(minute,2))

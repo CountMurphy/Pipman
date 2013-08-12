@@ -31,9 +31,9 @@ pub main| canExit
   currentItem:=single
   canExit:=false
   TC.Run
-  if TC.isPressed == true
-    repeat until TC.isPressed==false
-      TC.Run
+    if TC.isPressed == true
+      repeat until TC.isPressed==false
+        TC.Run
   repeat until canExit==true
     TC.Run
 
@@ -90,6 +90,7 @@ pub main| canExit
          'SC.Print(SN.dec(GPS.SatCount))
          Print
          GPS.Kill
+         BtnWait
          return
         save:
           GPS.Init
@@ -146,7 +147,16 @@ pub main| canExit
          SC.Position(1,0)
          GPS.PrintStdLong
          GPS.Kill
+         BtnWait
       canExit:=true
+
+pri BtnWait
+  repeat
+    TC.Run
+      if TC.isPressed == true
+        repeat until TC.isPressed==false
+          TC.Run
+        return
 
 pri SaveData
   SC.SaveStr(string("$Lat:"))

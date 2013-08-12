@@ -4,7 +4,7 @@ CON
 
   _wallpaper0 = $00
   _wallpaper1 = $73
-  _wallpaper2 = $A4
+  _wallpaper2 = $02
   _wallpaper3 = $00
 
 
