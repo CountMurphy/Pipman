@@ -16,7 +16,7 @@ obj
   Sen : "Sensors"
   Ed  : "Edit"
   TR  : "timer"
-
+  CM  : "CommMenu"
 var
   long  currentItem
 
@@ -96,6 +96,7 @@ pub main: canExit
     clock:return 1
     edit: Ed.main
     timer: TR.main
+    comm: CM.main
   return 1
 
   'SC.FadeOut
