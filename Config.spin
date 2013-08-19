@@ -7,6 +7,30 @@ CON
   _wallpaper2 = $02
   _wallpaper3 = $00
 
+  _Cal00=$13
+  _Cal01=$86
+  _Cal02=$A8
+  _Cal03=$00
+
+  _Cal10=$13
+  _Cal11=$86
+  _Cal12=$AA
+  _Cal13=$00
+
+  _Cal20=$13
+  _Cal21=$86
+  _Cal22=$AC
+  _Cal23=$00
+
+  _Cal30=$13
+  _Cal31=$86
+  _Cal32=$AE
+  _Cal33=$00
+
+  _Cal40=$13
+  _Cal41=$86
+  _Cal42=$B0
+  _Cal43=$00
 
 
 pub Wallpaper(num)
@@ -15,3 +39,39 @@ pub Wallpaper(num)
     1: return _wallpaper1
     2: return _wallpaper2
     3: return _wallpaper3
+
+pub Cal0(num)
+  case num
+    0: return _Cal00
+    1: return _Cal01
+    2: return _Cal02
+    3: return _Cal03
+
+pub Cal1(num)
+  case num
+    0: return _Cal10
+    1: return _Cal11
+    2: return _Cal12
+    3: return _Cal13
+
+pub Cal2(num)
+  case num
+    0: return _Cal20
+    1: return _Cal21
+    2: return _Cal22
+    3: return _Cal23
+
+pub Cal3(num)
+  case num
+    0: return _Cal30
+    1: return _Cal31
+    2: return _Cal32
+    3: return _Cal33
+
+
+pub Cal4(num)
+  case num
+    0: return _Cal40
+    1: return _Cal41
+    2: return _Cal42
+    3: return _Cal43

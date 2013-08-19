@@ -2,12 +2,15 @@ CON
   _clkmode=xtal1+pll16x
   _xinfreq=5_000_000
 obj
-  serial : "Simple_Serial"
+  serial : "FullDuplexSerial"
   TC     : "trackBallEx"
   SC     : "Screen"
-
+  SN    :  "Simple_Numbers"
+  str   :  "str3"
+var
+  byte details[30]
 pub Init
-  serial.init(31,30,9600)
+  serial.start(31,30,0,9600)
   SC.Init
   SC.MediaInit
 
@@ -19,7 +22,58 @@ pub ExportGPSTrack
   SC.SetSectorGPS'change when working
   Transmit
   DisplayMsg
-pub ImportCal
+pub ImportCal | eventNum,day,month,year,buffer,count
+  eventNum:=serial.rx
+  day:=serial.rx
+  month:=serial.rx
+  year:=serial.rx
+
+  count:=0
+  repeat
+    buffer:=serial.rx
+    if buffer == $FF
+      quit
+    details[count]:=buffer
+    count++
+
+  buffer:=str.Combine(string("data: "),@details)
+  serial.stop
+
+  SC.Clear
+  SC.Print(string("Calendar # "))
+  SC.Print(SN.dec(eventNum))
+  SC.Position(1,0)
+  SC.Print(SN.hex(day,2))
+  SC.Print(SN.hex(month,2))
+  SC.Print(SN.hex(year,2))
+  SC.Position(2,0)
+  SC.Print(buffer)
+  'Save that data
+  SC.MediaInit
+  case eventNum
+    0: SC.SetSectorCal0
+    1: SC.SetSectorCal1
+    2: SC.SetSectorCal2
+    3: SC.SetSectorCal3
+    4: SC.SetSectorCal4
+  SC.WriteByte(day)
+  SC.WriteByte(month)
+  SC.WriteByte(year)
+  SC.SaveStr(buffer)
+  SC.Flush
+  waitcnt(clkfreq+cnt)
+  SC.Clear
+
+pub DelCal(num)
+  case num
+    0: SC.SetSectorCal0
+    1: SC.SetSectorCal1
+    2: SC.SetSectorCal2
+    3: SC.SetSectorCal3
+    4: SC.SetSectorCal4
+  SC.WriteByte($FF)
+  SC.Flush
+
 
 pri Transmit | dataByte
   dataByte:=0
@@ -33,4 +87,5 @@ pri DisplayMsg
   SC.Print(string("Export Complete"))
   waitcnt(clkfreq+cnt)
   waitcnt(clkfreq+cnt)
+
 

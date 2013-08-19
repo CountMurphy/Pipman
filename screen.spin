@@ -7,7 +7,7 @@ obj
   SN     : "Simple_Numbers"
   Str    : "STRINGS2"
   TC :  "TrackBallEx"
-
+  conf  :"Config"
 
 'All of this could probably use a refactoring, but not sure if worth the effort.  have a deadline
 
@@ -222,6 +222,22 @@ pub DrawTri(X1,Y1,X2,Y2,X3,Y3,color1,color2)
 pub SetSectorGPS
   SetByteAddr($0C,$80,$00,$00)
 
+pub SetSectorCal0
+  SetByteAddr(conf.Cal0(0),conf.Cal0(1),conf.Cal0(2),conf.Cal0(3))
+
+pub SetSectorCal1
+  SetByteAddr(conf.Cal1(0),conf.Cal1(1),conf.Cal1(2),conf.Cal1(3))
+
+pub SetSectorCal2
+  SetByteAddr(conf.Cal2(0),conf.Cal2(1),conf.Cal2(2),conf.Cal2(3))
+
+pub SetSectorCal3
+  SetByteAddr(conf.Cal3(0),conf.Cal3(1),conf.Cal3(2),conf.Cal3(3))
+
+pub SetSectorCal4
+  SetByteAddr(conf.Cal4(0),conf.Cal4(1),conf.Cal4(2),conf.Cal4(3))
+
+
 'ONLY CALL AFTER SET SECTOR COMMAND!
 'for set, take size in bytes, pad with 512ish (leftover sector) add next item
 '512 sector size
@@ -248,10 +264,8 @@ pub ReadByte
   else
     return string("IO Error")
 
-pri WaitForComplete
-  return serial.rx
 
-pri WriteByte(char)| retval1,retval2,retval3
+pub WriteByte(char)| retval1,retval2,retval3
   if char <> 0
     serial.tx($FF)
     serial.tx($B5)
@@ -269,4 +283,8 @@ pri WriteByte(char)| retval1,retval2,retval3
 '    Print(SN.hex(retval3,2))
   else
     Print(string("nulled out"))
+
+
+pri WaitForComplete
+  return serial.rx
 
