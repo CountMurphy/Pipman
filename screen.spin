@@ -252,7 +252,7 @@ pub flush
   WaitForComplete
   WaitForComplete
 
-pub ReadByte
+pub ReadByteAsString
   serial.tx($FF)
   serial.tx($B7)
 '  Print(SN.hex(WaitForComplete,2))'general ok
@@ -264,6 +264,17 @@ pub ReadByte
   else
     return string("IO Error")
 
+pub ReadByte
+  serial.tx($FF)
+  serial.tx($B7)
+'  Print(SN.hex(WaitForComplete,2))'general ok
+'  Print(SN.hex(WaitForComplete,2))'data1
+'  Print(SN.hex(WaitForComplete,2))'data2
+  if serial.rx ==$06
+    serial.rx
+    return serial.rx
+  else
+    return string("IO Error")
 
 pub WriteByte(char)| retval1,retval2,retval3
   if char <> 0

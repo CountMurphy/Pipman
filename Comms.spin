@@ -36,7 +36,7 @@ pub ImportCal | eventNum,day,month,year,buffer,count
     details[count]:=buffer
     count++
 
-  buffer:=str.Combine(string("data: "),@details)
+  buffer:=str.Combine(string(" "),@details)
   serial.stop
 
   SC.Clear
@@ -78,7 +78,7 @@ pub DelCal(num)
 pri Transmit | dataByte
   dataByte:=0
   repeat until strcomp(dataByte,string("FF")) ==-1
-    dataByte:=SC.ReadByte
+    dataByte:=SC.ReadByteAsString
     serial.str(dataByte)
 
 pri DisplayMsg

@@ -88,3 +88,9 @@ pub isDown
   return downStatus
 pub isUp
   return upStatus
+pub WaitForBtnPress
+  repeat
+    Run
+    if isPressed
+      repeat until isPressed==false
+        return

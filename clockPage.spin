@@ -13,6 +13,7 @@ obj
   TC : "trackBallEx"
   GPS : "gps"
   fd  : "FullDuplexSerial"
+  CL  : "Calendar"
 var
   long timer
   long stack[20]
@@ -40,6 +41,11 @@ pub main| month,day,dow,year,hour,minute,second,go
       TC.LEDOn
       SC.ShowFrame(1) 'cant display wallpaper unless this is access first.  Odd
       SC.Clear
+
+      'check for alarm dates
+      Rtc.readDate(@day,@month,@year,@dow)
+      CL.CheckForDate(day,month,year)
+
       SC.SetByteAddr(Config.Wallpaper(0),Config.Wallpaper(1),Config.Wallpaper(2),Config.Wallpaper(3))
       SC.DisplayImage
       ShowScreen(day,month,year,hour,minute,second,dow)

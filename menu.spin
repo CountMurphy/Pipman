@@ -17,6 +17,7 @@ obj
   Ed  : "Edit"
   TR  : "timer"
   CM  : "CommMenu"
+  CL : "Calendar"
 var
   long  currentItem
 
@@ -97,6 +98,7 @@ pub main: canExit
     edit: Ed.main
     timer: TR.main
     comm: CM.main
+    cal: CL.ReadAll
   return 1
 
   'SC.FadeOut
