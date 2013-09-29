@@ -60,7 +60,7 @@ pub DateToDOW(month,day,year)| dow,modMonth
     5: modMonth:=1
     8: modMonth:=2
     6: modMonth:=4
-    12: modMonth:=5
+    12,9: modMonth:=5
   if isLeapYear(year)
     'modify if jan or feb
     case month

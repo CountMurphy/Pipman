@@ -320,9 +320,10 @@ pri calChange(day,month,year) | alreadyCorrected
       month:=month+1
       day:=1
     else
-      'going back
-      month:=month-1
-      day:=rewindDays(month,year)
+      if day < 1
+        'going back
+        month:=month-1
+        day:=rewindDays(month,year)
 
 
 
