@@ -20,7 +20,7 @@ pub ReadAll|loopCount
   SC.Clear
   'Show All Cal events
   loopCount:=0
-  repeat 4
+  repeat 5
     case loopCount
       0:SC.SetSectorCal0
       1:SC.SetSectorCal1
@@ -46,16 +46,28 @@ pub CheckForDate(day,month,year)|loopCount
       3:SC.SetSectorCal3
       4:SC.SetSectorCal4
     ReadFromCard
-    loopCount++
     if day ==dayByte and month==monthByte and year==yearByte and isValid==true
       'sound the alarm
+      SC.On
       SC.Clear
       SC.Position(0,0)
       SC.Print(string("********ALERT**********"))
       SC.Position(7,0)
       SC.Print(eventDesc)
       SC.Beep
+      DelCal(loopCount)
       quit
+    loopCount++
+
+pub DelCal(num)
+  case num
+    0: SC.SetSectorCal0
+    1: SC.SetSectorCal1
+    2: SC.SetSectorCal2
+    3: SC.SetSectorCal3
+    4: SC.SetSectorCal4
+  SC.WriteByte($FF)
+  SC.Flush
 
 pri ReadFromCard | dataByte,counter,buffer
   dataByte:=0

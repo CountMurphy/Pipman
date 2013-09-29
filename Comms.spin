@@ -7,6 +7,7 @@ obj
   SC     : "Screen"
   SN    :  "Simple_Numbers"
   str   :  "str3"
+  CL    :  "calendar"
 var
   byte details[30]
 pub Init
@@ -48,6 +49,7 @@ pub ImportCal | eventNum,day,month,year,buffer,count
   SC.Print(SN.hex(year,2))
   SC.Position(2,0)
   SC.Print(buffer)
+
   'Save that data
   SC.MediaInit
   case eventNum
@@ -65,15 +67,7 @@ pub ImportCal | eventNum,day,month,year,buffer,count
   SC.Clear
 
 pub DelCal(num)
-  case num
-    0: SC.SetSectorCal0
-    1: SC.SetSectorCal1
-    2: SC.SetSectorCal2
-    3: SC.SetSectorCal3
-    4: SC.SetSectorCal4
-  SC.WriteByte($FF)
-  SC.Flush
-
+  CL.DelCal(num)
 
 pri Transmit | dataByte
   dataByte:=0

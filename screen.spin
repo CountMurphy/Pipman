@@ -145,6 +145,7 @@ pub Beep
   serial.tx($03)
   serial.tx($E8)'one sec
   WaitForComplete
+  TC.WaitForBtnPress
 
 pub DrawRec(X1,Y1,X2,Y2,colorHex1,colorHex2)
   serial.tx($FF)
@@ -288,7 +289,7 @@ pub WriteByte(char)| retval1,retval2,retval3
     retval1:=WaitForComplete
     retval2:=WaitForComplete
     retval3:=WaitForComplete
-    Print(SN.hex(char,2))
+'    Print(SN.hex(char,2))
 '    Print(SN.hex(retval1,2))
 '    Print(SN.hex(retval2,2))
 '    Print(SN.hex(retval3,2))
