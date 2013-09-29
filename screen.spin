@@ -135,17 +135,30 @@ pub DisplayImage
   serial.tx(00)
   WaitForComplete
 
-pub Beep
-  serial.tx($FF)
-  serial.tx($DA)
-  'note
-  serial.tx(00)
-  serial.tx($40)
-  'duration
-  serial.tx($03)
-  serial.tx($E8)'one sec
-  WaitForComplete
-  TC.WaitForBtnPress
+pub Beep|note1,note2,lastRun
+  note1:=$40
+  note2:=$13
+  lastRun:=2
+  repeat
+    serial.tx($FF)
+    serial.tx($DA)
+    'note
+    serial.tx(00)
+    case lastRun
+      1:
+        serial.tx(note2)
+        lastRun:=2
+      2:
+        serial.tx(note1)
+        lastRun:=1
+    'duration
+    serial.tx($03)
+    serial.tx($E8)'one sec
+    WaitForComplete
+    TC.Run
+    if TC.isPressed
+      TC.WaitForBtnPress
+      return
 
 pub DrawRec(X1,Y1,X2,Y2,colorHex1,colorHex2)
   serial.tx($FF)
