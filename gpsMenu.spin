@@ -118,6 +118,7 @@ pub main| canExit,frame
           SC.MediaInit
           SC.SetByteAddr($00,$00,$00,$00)
           SC.ShowFrame(15)
+          SC.Clear
           SC.SetSectorGPS
           Print
           'Save that mother
@@ -125,27 +126,58 @@ pub main| canExit,frame
           SC.Flush
           GPS.Kill
         track:
+          SC.MediaInit
           SC.SetByteAddr($00,$00,$00,$00)
-          TC.Run
           GPS.Init
-          SC.ShowVideo
-          SC.SetSectorGPS
-          waitcnt(clkfreq+cnt)
-          TC.Run
-          repeat until TC.isPressed ==true
+
+          'wait for connection
+          repeat until GPS.SatCount => 3
+            if frame < 250
+              SC.ShowFrame(frame++)
+            else
+              if frame <> 300
+                SC.FadeOut
+                frame:=300
             TC.Run
-            repeat until GPS.SatCount=>3
-              'Do nothing
-              TC.Run
-              if TC.isPressed ==true
-                quit
+            if TC.isPressed==true
+              SC.On
+              SC.Clear
+              SC.Print(string("Aborted"))
+              GPS.Kill
+              repeat 2
+                waitcnt(clkfreq+cnt)
+              return
+          SC.SetSectorGPSMap
+          SC.FadeOut
+
+          'save coords
+          TC.Run
+          repeat until TC.isPressed==true
+            repeat until GPS.SatCount => 3
+               TC.Run
+               if TC.isPressed==true
+                 quit
             SaveData
-            'wait a minute, a really hacky wait a minute
-            'should be in own cog
-            'repeat 60
-             ' waitcnt(clkfreq+cnt)
+            GPS.Kill
+            repeat 60
+              TC.Run
+              if TC.isPressed==true
+                quit
+              waitcnt(clkfreq+cnt)
+            TC.Run
+            if TC.isPressed==true
+              quit
+            GPS.Init
+            waitcnt(clkfreq+cnt)
+            waitcnt(clkfreq+cnt)'ensure that pulled data is current
+
           SC.Flush
           GPS.Kill
+          SC.FadeIn
+          SC.Clear
+          SC.Print(string("Coordinates Saved"))
+          repeat 2
+            waitcnt(clkfreq+cnt)
         google:
           GPS.Init
          'SC.Print(SN.dec(GPS.SatCount))

@@ -21,7 +21,7 @@ var
 pub main| month,day,dow,year,hour,minute,second,go
   SC.Init
   SC.On
-
+  SC.MediaInit
   SC.ShowFrame(1)
   SC.Clear
   'Set DST and get current local datetime

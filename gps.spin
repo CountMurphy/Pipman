@@ -54,7 +54,7 @@ pub PrintStdLong
 pub PrintAlt
   return gps.Altitude
 pub Kill
-  cogstop(cog)
+  gps.stop
   outa[_GPSPwr]:=0
 pub ProcessLocalDateTime(DST)
   repeat until cn.StrToDec(gps.satellites) => 3

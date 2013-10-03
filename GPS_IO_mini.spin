@@ -23,7 +23,7 @@ VAR
 
 
    byte gps_buff[80],Rx',cksum
-   long cog,cptr,ptr,arg,j
+   long cptr,ptr,arg,j
    long Null[1]
    
 OBJ
@@ -35,7 +35,7 @@ PUB start : okay
 '' -- returns false if no cog available
 
   okay := uart.init(serRecv,serXmit,4800)
-  return cog := cognew(readNEMA,@gps_stack) + 1 
+  coginit(4,readNEMA,@gps_stack) + 1
 
 PUB readNEMA
   Null[0] := 0
@@ -124,4 +124,7 @@ pub hdop
    return GPGGAa[7]
  
 'pub vdop
-'   return GPGSAa[14] 
+'   return GPGSAa[14]
+
+pub stop
+  cogstop(4)

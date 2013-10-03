@@ -20,7 +20,7 @@ pub ExportGPSSingle| dataByte
   Transmit
   DisplayMsg
 pub ExportGPSTrack
-  SC.SetSectorGPS'change when working
+  SC.SetSectorGPSMap
   Transmit
   DisplayMsg
 pub ImportCal | eventNum,day,month,year,buffer,count

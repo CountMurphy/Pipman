@@ -101,7 +101,7 @@ pub TxtColor(hexPart1,hexPart2)
   WaitForComplete
 
 pub ShowFrame(frameNum)
-  MediaInit
+  'MediaInit
   serial.tx($FF)
   serial.tx($BA)
   'x
@@ -234,7 +234,10 @@ pub DrawTri(X1,Y1,X2,Y2,X3,Y3,color1,color2)
   WaitForComplete
 
 pub SetSectorGPS
-  SetByteAddr($0C,$80,$00,$00)
+  SetByteAddr(conf.GPS(0),conf.GPS(1),conf.GPS(2),conf.GPS(3))
+
+pub SetSectorGPSMap
+  SetByteAddr(conf.GPSMap(0),conf.GPSMap(1),conf.GPSMap(2),conf.GPSMap(3))
 
 pub SetSectorCal0
   SetByteAddr(conf.Cal0(0),conf.Cal0(1),conf.Cal0(2),conf.Cal0(3))

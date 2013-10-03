@@ -32,6 +32,16 @@ CON
   _Cal42=$B0
   _Cal43=$00
 
+  _GPS0=$0C
+  _GPS1=$80
+  _GPS2=$00
+  _GPS3=$00
+
+  _MAP0=$0C
+  _MAP1=$80
+  _MAP2=$02
+  _MAP3=$00
+
 
 pub Wallpaper(num)
   case num
@@ -75,3 +85,17 @@ pub Cal4(num)
     1: return _Cal41
     2: return _Cal42
     3: return _Cal43
+
+pub GPS(num)
+  case num
+    0: return _GPS0
+    1: return _GPS1
+    2: return _GPS2
+    3: return _GPS3
+
+pub GPSMap(num)
+  case num
+    0: return _MAP0
+    1: return _MAP1
+    2: return _MAP2
+    3: return _MAP3
