@@ -81,21 +81,7 @@ pub main| canExit,frame
         single:
          GPS.Init
          SC.SetByteAddr($00,$00,$00,$00)
-         'SC.Print(SN.dec(GPS.SatCount))
-         'SC.FadeOut
-         repeat until GPS.SatCount => 3
-           TC.Run
-             if TC.isPressed ==true
-               SC.FadeIn
-               SC.Clear
-               GPS.Kill
-               return
-             else
-               if frame < 500
-                 SC.ShowFrame(frame)
-                 frame++
-               else
-                 SC.FadeOut
+         GPS.PlaySpinnerWhileLocking(500)
          SC.FadeIn
          SC.Clear
          'SC.Print(SN.dec(GPS.SatCount))
@@ -131,13 +117,7 @@ pub main| canExit,frame
           GPS.Init
 
           'wait for connection
-          repeat until GPS.SatCount => 3
-            if frame < 250
-              SC.ShowFrame(frame++)
-            else
-              if frame <> 300
-                SC.FadeOut
-                frame:=300
+          GPS.PlaySpinnerWhileLocking(250)
             TC.Run
             if TC.isPressed==true
               SC.On

@@ -6,11 +6,13 @@ CON
 
 obj
   serial : "Simple_Serial"
-  SN : "Simple_Numbers"
-  gps : "GPS_IO_mini"
-  fm : "FloatMath"
-  tz : "TimeZone"
-  cn: "Converter"
+  SN     : "Simple_Numbers"
+  gps    : "GPS_IO_mini"
+  fm     : "FloatMath"
+  tz     : "TimeZone"
+  cn     : "Converter"
+  SC     : "Screen"
+  TC     : "trackBallEx"
 var
   'long sats
   'long fp_number
@@ -19,23 +21,9 @@ var
 pub Init
   dira[_GPSPwr]:=1
   outa[_GPSPwr]:=1
+  SC.Init
   cog:=gps.start
-  'start
-  'dont forget to finalize after reading is done
-  ' serial.init(31,30,9600)
-  'repeat
-  '  sats:= cn.StrToDec(gps.satellites)
-   ' if sats => 3
-   '   serial.str(SN.dec(sats))
-      'serial.str(gps.latitude)
-      'serial.str(gps.N_S)
-      'serial.str(string("     "))
-      'serial.str(gps.longitude)
-      'serial.str(gps.E_W)
-      'serial.str(string("    "))
 
-
-'      serial.str(SN.dec(tz.GetTimeZone(gps.longitude,gps.E_W)))
 
 pub SatCount
   return cn.StrToDec(gps.satellites)
@@ -57,6 +45,23 @@ pub Kill
   gps.stop
   outa[_GPSPwr]:=0
 pub ProcessLocalDateTime(DST)
-  repeat until cn.StrToDec(gps.satellites) => 3
-    waitcnt(clkfreq+cnt)
+  SC.SetByteAddr($00,$00,$00,$00)
+  PlaySpinnerWhileLocking(500)
   repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1
+
+pub PlaySpinnerWhileLocking(totalFrames)|frame
+  frame:=0
+  repeat until cn.StrToDec(gps.satellites) => 3
+    TC.Run
+    if TC.isPressed ==true
+      SC.FadeIn
+      SC.Clear
+      Kill
+      return
+    else
+      if frame < totalFrames
+        SC.ShowFrame(frame++)
+      else
+        if frame <> 700
+          SC.FadeOut
+          frame:=700

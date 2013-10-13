@@ -133,7 +133,6 @@ pri DSTConfig| DST
         TC.Run
       SC.Clear
       gps.init
-      SC.ShowVideo
       SC.Clear
       gps.ProcessLocalDateTime(DST)
       waitcnt(clkfreq+cnt)
