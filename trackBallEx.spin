@@ -91,6 +91,7 @@ pub isUp
 pub WaitForBtnPress
   repeat
     Run
-    if isPressed
+    if isPressed ==true
       repeat until isPressed==false
-        return
+        Run
+      return

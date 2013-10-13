@@ -44,10 +44,11 @@ pub PrintAlt
 pub Kill
   gps.stop
   outa[_GPSPwr]:=0
-pub ProcessLocalDateTime(DST)
+pub ProcessLocalDateTime(DST)|goOn
   SC.SetByteAddr($00,$00,$00,$00)
-  PlaySpinnerWhileLocking(500)
-  repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1
+  goOn:=PlaySpinnerWhileLocking(500)
+  if goOn==0
+    repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1
 
 pub PlaySpinnerWhileLocking(totalFrames)|frame
   frame:=0
@@ -57,7 +58,7 @@ pub PlaySpinnerWhileLocking(totalFrames)|frame
       SC.FadeIn
       SC.Clear
       Kill
-      return
+      return -1
     else
       if frame < totalFrames
         SC.ShowFrame(frame++)
@@ -65,3 +66,4 @@ pub PlaySpinnerWhileLocking(totalFrames)|frame
         if frame <> 700
           SC.FadeOut
           frame:=700
+  return 0

@@ -156,7 +156,7 @@ pub Beep|note1,note2,lastRun
     serial.tx($E8)'one sec
     WaitForComplete
     TC.Run
-    if TC.isPressed
+    if TC.isPressed ==true
       TC.WaitForBtnPress
       return
 

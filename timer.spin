@@ -24,7 +24,7 @@ var
   long isFaded
   long tickCounter 'to be used to trigger fadeout
   long isSetupMode 'seperate mode for countdown setup.
-pub main | curPOS, runSw,runCd
+pub main | curPOS, runSw,runCd,displayTimeDelay
   repeat until TC.isPressed == false
     TC.Run
   init
@@ -35,7 +35,13 @@ pub main | curPOS, runSw,runCd
   runCd:=false
   curMode:=sw
   isSetupMode:=false
+  Rtc.init(17,16,18)
+  displayTimeDelay:=0
+  DrawTime
   repeat
+    if displayTimeDelay++ > 150
+      displayTimeDelay:=0
+      DrawTime
     TC.Run
 
     if tickCounter == 15 and isFaded == false
@@ -95,6 +101,7 @@ pub main | curPOS, runSw,runCd
         tickCounter:=0
         isFaded:=false
         SC.FadeIn
+        DrawTimer
       else
         if isSetupMode == true
           SetTimer
@@ -135,6 +142,7 @@ pub main | curPOS, runSw,runCd
               else
                 hour:=1
                 minute:=0
+                second:=0
                 CDInit
               curPOS:=run
             menu:
@@ -195,7 +203,6 @@ pri CDInit
 
 
 pri swRun| curHour,curMinute,curSecond
-  Rtc.init(17,16,18)
   Rtc.readTime(@curHour,@curMinute,@curSecond)
   if curSecond <> lastSec
     second:=second+1
@@ -213,7 +220,6 @@ pri swRun| curHour,curMinute,curSecond
   lastSec:=curSecond
 
 pri cdRun| curHour,curMinute,curSecond
-  Rtc.init(17,16,18)
   Rtc.readTime(@curHour,@curMinute,@curSecond)
   if curSecond <> lastSec
     second:=second-1
@@ -297,7 +303,7 @@ pri SetTimer| canExit,setPos
           second:=second+1
           if second > 59
             second:=0
-      DrawTime
+      DrawTimer
 
     if TC.isDown == true
       case setPos
@@ -313,7 +319,7 @@ pri SetTimer| canExit,setPos
           second:=second-1
           if second < 0
             second:=59
-      DrawTime
+      DrawTimer
 
     if TC.isPressed == true
       repeat until TC.isPressed == false
@@ -323,7 +329,7 @@ pri SetTimer| canExit,setPos
   'exit loop
   cdInit
 
-pri DrawTime
+pri DrawTimer
   SC.FontSize(0)
  ' SC.TxtColor($FF,$E0)
   SC.Position(7,4)
@@ -333,3 +339,13 @@ pri DrawTime
   SC.Print(SN.decx(minute,2))
   SC.Print(string(":"))
   SC.Print(SN.decx(second,2))
+
+pri DrawTime|curHour,curMin,curSec
+  Rtc.readTime(@curHour,@curMin,@curSec)
+  SC.FontSize(0)
+  SC.Position(0,0)
+  SC.Print(SN.Decx(curHour,2))
+  SC.Print(string(":"))
+  SC.Print(SN.Decx(curMin,2))
+'  SC.Print(string(":"))
+'  SC.Print(SN.Dec(curSec))
