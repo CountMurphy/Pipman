@@ -62,6 +62,7 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
   offset:=0
   dow:=0
   SC.Init
+  SC.On
   SC.FontSize(1)
   SC.Print(string("Sat Lock..."))
   waitcnt(clkfreq+cnt)
