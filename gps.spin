@@ -40,7 +40,7 @@ pub PrintStdLat
 pub PrintStdLong
   return tz.PrintConvertCoord(GPS.Longitude,GPS.E_W)
 pub PrintAlt
-  return gps.Altitude
+  return gps.GPSaltitude
 pub Kill
   gps.stop
   outa[_GPSPwr]:=0
