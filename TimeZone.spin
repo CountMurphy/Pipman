@@ -347,8 +347,8 @@ pri calChange(day,month,year) | alreadyCorrected
           month:=3
       else
         if day < 1
-        day:=31
-        month:=1
+          day:=31
+          month:=1
   adjDay:=day
   adjMonth:=month
   adjYear:=year
