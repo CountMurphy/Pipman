@@ -1,11 +1,10 @@
 CON
-  ledpin=13
-  Btn=10
+
+  Btn=15
   up=14
-  down=12
+  down=13
   left=11
-  right=9
-  testLED=27
+  right=12
   _clkmode=xtal1+pll16x
   _xinfreq=5_000_000
 
@@ -17,55 +16,28 @@ var
   long rightStatus
   long leftStatus
 
-PUB Run  :upSig | downSig,rightSig,leftSig
-'upSig is for IDing when track ball pulses for up
-'upStatus is to indicate to screen move cursor up
-  dira[ledpin]:=1
-  leftStatus:=false
-  rightStatus:=false
-  downStatus:=false
-  upStatus:=false
+PUB Run
 
-  upSig:=ina[up]
-  leftSig:=ina[left]
-  rightSig:=ina[right]
-  downSig:=ina[down]
-  upSig:=ina[up]
-  'if btn launch cog, timer 1 minute?
-
-  waitcnt(clkfreq/150+cnt)
-  'waitcnt(clkfreq+cnt)
-  if ina[up]<>upSig
-  '  outa[testLED]:=1
-    upSig:=ina[up]
+  waitcnt(clkfreq/10+cnt)
+  if ina[up]==0
     upStatus:=true
   else
-    outa[testLED]:=0
     upStatus:=false
 
-  if ina[down]<>downSig
- '   outa[testLED]:=1
-    downSig:=ina[down]
+  if ina[down]==0
     downStatus:=true
   else
-  '  outa[testLED]:=0
     downStatus:=false
 
-  if ina[left]<>leftSig
-    'outa[testLED]:=1
-    leftSig:=ina[left]
+  if ina[left]==0
     leftStatus:=true
   else
-    'outa[testLED]:=0
     leftStatus:=false
 
 
-  if ina[right]<>rightSig
- '   outa[testLED]:=1
-    rightSig:=ina[right]
+  if ina[right]==0
     rightStatus:=true
   else
-  '  outa[testLED]:=0
     rightStatus:=false
 
   if ina[Btn]==0
@@ -73,10 +45,9 @@ PUB Run  :upSig | downSig,rightSig,leftSig
   else
     pressedStatus:=false
 pub LEDOn
-  outa[ledpin]:=1
 
 pub KillLed
-  outa[ledpin]:=0
+'  outa[ledpin]:=0
 pub isPressed
   return pressedStatus
 
