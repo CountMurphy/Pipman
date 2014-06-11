@@ -174,8 +174,8 @@ pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, di
   'need to go back from DecPos 2 left. intify it, run form.
   intCoord:=cn.Convert_ascii_string_to_fp(Coord)
   intValMain:=GetRegion(intCoord,DecPos)
-  if cn.Convert_ascii_string_to_fp(str.Parse(str.StrRev(SN.dec(intCoord)),4,1)) > 5
-   ' intValMain:=intValMain - 1 // dont remember why this is here, but it dicks things up
+  if cn.Convert_ascii_string_to_fp(str.Parse(str.StrRev(SN.dec(intCoord)),4,0)) > 5
+    intValMain:=intValMain - 1 '// dont remember why this is here...
 
   'for the remainder, get string len of master, minus intValMain. then parse.
   remainLen:=StrSize(Coord)
