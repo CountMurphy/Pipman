@@ -175,7 +175,7 @@ pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, di
   intCoord:=cn.Convert_ascii_string_to_fp(Coord)
   intValMain:=GetRegion(intCoord,DecPos)
   if cn.Convert_ascii_string_to_fp(str.Parse(str.StrRev(SN.dec(intCoord)),4,1)) > 5
-    intValMain:=intValMain - 1
+   ' intValMain:=intValMain - 1 // dont remember why this is here, but it dicks things up
 
   'for the remainder, get string len of master, minus intValMain. then parse.
   remainLen:=StrSize(Coord)
@@ -188,17 +188,6 @@ pub PrintConvertCoord(Coord,Direction) | intValMain, intValRemainder, DecPos, di
     MathCoord:=fm.FDiv(intValRemainder,0.06)
   if StrComp(Direction,string("W")) or StrComp(Direction,string("S"))
     RetVal:=string("-")
-  'RetVal:=str.Concatenate(RetVal,intValMain)
-  'RetVal:=str.Concatenate(RetVal,string("."))
-  'RetVal:=str.Concatenate(RetVal,MathCoord)
-  'RetVal:=string("TEST")
-  'return RetVal
-  'FINAL:=string(" ")
-  'FINAL:=Str.Concatenate(RetVal,SN.dec(intValMain))
-  'FINAL:=Str.Concatenate(FINAL,string("."))
-  'FINAL:=Str.Concatenate(FINAL,SN.dec(MathCoord))
-  'return FINAL
-  'serial.init(1,30,4800)
   SC.Init
   SC.Print(RetVal)
   SC.Print(SN.dec(intValMain))
