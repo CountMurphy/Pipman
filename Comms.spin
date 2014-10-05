@@ -66,8 +66,15 @@ pub ImportCal | eventNum,day,month,year,buffer,count
   waitcnt(clkfreq+cnt)
   SC.Clear
 
-pub DelCal(num)
+pub DelCal | num
+  num:=serial.rx
   CL.DelCal(num)
+  SC.Clear
+  SC.Print(string("Caldendar "))
+  SC.Print(SN.dec(num))
+  SC.Print(string(" deleted"))
+  waitcnt(clkfreq+cnt)
+  SC.Clear
 
 pri Transmit | dataByte
   dataByte:=0

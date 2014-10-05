@@ -87,7 +87,7 @@ pub main| canExit,frame
          'SC.Print(SN.dec(GPS.SatCount))
          Print
          GPS.Kill
-         BtnWait
+         TC.WaitForBtnPress
          return
         save:
           GPS.Init
@@ -188,16 +188,8 @@ pub main| canExit,frame
          SC.Position(1,0)
          GPS.PrintStdLong
          GPS.Kill
-         BtnWait
+         TC.WaitForBtnPress
       canExit:=true
-
-pri BtnWait
-  repeat
-    TC.Run
-      if TC.isPressed == true
-        repeat until TC.isPressed==false
-          TC.Run
-        return
 
 pri SaveData
   SC.SaveStr(string("$Lat:"))

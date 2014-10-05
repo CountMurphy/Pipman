@@ -19,6 +19,8 @@ var
   long stack[20]
 
 pub main| month,day,dow,year,hour,minute,second,go
+  repeat 2
+    waitcnt(clkfreq+cnt)
   SC.Init
   SC.On
   SC.MediaInit

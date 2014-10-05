@@ -18,6 +18,8 @@ pub main |currentItem
   SC.Print(string("Ex Map"))
   SC.Position(8,4)
   SC.Print(string("Im Cal"))
+  SC.Position(8,14)
+  SC.Print(string("Del Cal"))
 
   SC.DrawRec(80,45,25,25,$F8,$00)
   currentItem:=0
@@ -34,6 +36,10 @@ pub main |currentItem
           SC.DrawRec(95,45,145,25,$F8,$00)'map
           SC.DrawRec(80,45,25,25,$00,$00)
           currentItem:=1
+        2:
+          SC.DrawRec(75,75,25,55,$00,$00)
+          SC.DrawRec(150,75,95,55,$F8,$00)'del
+          currentItem:=3
 
     if TC.isLeft==true
       case currentItem
@@ -41,6 +47,10 @@ pub main |currentItem
           SC.DrawRec(95,45,145,25,$00,$00)'map
           SC.DrawRec(80,45,25,25,$F8,$00)
           currentItem:=0
+        3:
+          SC.DrawRec(75,75,25,55,$F8,$00)
+          SC.DrawRec(150,75,95,55,$00,$00)'del
+          currentItem:=2
 
     if TC.isDown==true
       case currentItem
@@ -48,6 +58,10 @@ pub main |currentItem
           SC.DrawRec(80,45,25,25,$00,$00)
           SC.DrawRec(75,75,25,55,$F8,$00)'cal
           currentItem:=2
+        1:
+          SC.DrawRec(95,45,145,25,$00,$00)
+          SC.DrawRec(150,75,95,55,$F8,$00)'del
+          currentItem:=3
 
     if TC.isUp==true
       case currentItem
@@ -55,6 +69,10 @@ pub main |currentItem
           SC.DrawRec(75,75,25,55,$00,$00)'cal
           SC.DrawRec(80,45,25,25,$F8,$00)
           currentItem:=0
+        3:
+          SC.DrawRec(95,45,145,25,$F8,$00)'map
+          SC.DrawRec(150,75,95,55,$00,$00)'del
+          currentItem:=1
 
   repeat until TC.isPressed==false
     TC.Run
@@ -68,3 +86,5 @@ pub main |currentItem
       CM.ExportGPSTrack
     2:
       CM.ImportCal
+    3:
+      CM.DelCal
