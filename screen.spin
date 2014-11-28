@@ -160,6 +160,16 @@ pub Beep|note1,note2,lastRun
       TC.WaitForBtnPress
       return
 
+pub Click
+  serial.tx($FF)
+  serial.tx($DA)
+  serial.tx($00)
+  serial.tx($00)'note
+  serial.tx($00)
+  serial.tx($0A)'10 mili sec
+  WaitForComplete
+
+
 pub DrawRec(X1,Y1,X2,Y2,colorHex1,colorHex2)
   serial.tx($FF)
   serial.tx($CF)

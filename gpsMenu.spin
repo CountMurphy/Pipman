@@ -39,6 +39,7 @@ pub main| canExit,frame
     TC.Run
 
     if TC.isRight ==true
+      SC.Click
       ClearCurrent
       case currentItem
         single: currentItem:=track
@@ -47,6 +48,7 @@ pub main| canExit,frame
       DrawItem
 
     if TC.isLeft == true
+      SC.Click
       ClearCurrent
       case currentItem
         track: currentItem:=single
@@ -55,6 +57,7 @@ pub main| canExit,frame
       DrawItem
 
     if TC.isDown ==true
+      SC.Click
       ClearCurrent
       case currentItem
         single: currentItem:=save
@@ -64,6 +67,7 @@ pub main| canExit,frame
 
 
     if TC.isUp ==true
+      SC.Click
       ClearCurrent
       case currentItem
         save: currentItem:=single

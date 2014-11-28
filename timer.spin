@@ -54,6 +54,7 @@ pub main | curPOS, runSw,runCd,displayTimeDelay
       if cdRun == 1
         runCd:=false
     if TC.isRight == true
+      SC.Click
       clearSetMenu
       case curPOS
         run:
@@ -69,6 +70,7 @@ pub main | curPOS, runSw,runCd,displayTimeDelay
           SC.DrawRec(155,120,124,108,$F8,$00)
           curPOS:=menu
     if TC.isLeft == true
+      SC.Click
       clearSetMenu
       case curPOS
         mode:
@@ -85,6 +87,7 @@ pub main | curPOS, runSw,runCd,displayTimeDelay
           curPOS:=reset
 
     if TC.isUp == true
+      SC.Click
       'ensure we are in the right mode
       if curMode == cd
           isSetupMode:=true

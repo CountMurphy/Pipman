@@ -50,6 +50,7 @@ pub main: canExit
     TC.Run
 
     if TC.isRight ==true
+      SC.Click
       ClearCurrent
       case currentItem
         clock: currentItem:=nav
@@ -59,6 +60,7 @@ pub main: canExit
       DrawItem
 
     if TC.isLeft == true
+      SC.Click
       ClearCurrent
       case currentItem
         nav: currentItem:=clock
@@ -67,6 +69,7 @@ pub main: canExit
       DrawItem
 
     if TC.isDown ==true
+      SC.Click
       ClearCurrent
       case currentItem
         clock: currentItem:=timer
@@ -78,6 +81,7 @@ pub main: canExit
 
 
     if TC.isUp ==true
+      SC.Click
       ClearCurrent
       case currentItem
         timer: currentItem:=clock

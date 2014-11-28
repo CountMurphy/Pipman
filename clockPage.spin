@@ -146,9 +146,11 @@ pri DSTConfig| DST
     if TC.isRight == true
       SC.DrawRec(75,75,25,50,$00,$00)
       SC.DrawRec(90,75,130,50,$F8,$00)
+      SC.Click
       DST:=false
 
     if TC.isLeft == true
       SC.DrawRec(75,75,25,50,$F8,$00)
       SC.DrawRec(90,75,130,50,$00,$00)
+      SC.Click
       DST:=true

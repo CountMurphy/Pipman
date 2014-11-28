@@ -31,6 +31,7 @@ pub main |currentItem
   repeat until TC.isPressed==true
     TC.Run
     if TC.isRight==true
+      SC.Click
       case currentItem
         0:
           SC.DrawRec(95,45,145,25,$F8,$00)'map
@@ -42,6 +43,7 @@ pub main |currentItem
           currentItem:=3
 
     if TC.isLeft==true
+      SC.Click
       case currentItem
         1:
           SC.DrawRec(95,45,145,25,$00,$00)'map
@@ -53,6 +55,7 @@ pub main |currentItem
           currentItem:=2
 
     if TC.isDown==true
+      SC.Click
       case currentItem
         0:
           SC.DrawRec(80,45,25,25,$00,$00)
@@ -64,6 +67,7 @@ pub main |currentItem
           currentItem:=3
 
     if TC.isUp==true
+      SC.Click
       case currentItem
         2:
           SC.DrawRec(75,75,25,55,$00,$00)'cal
