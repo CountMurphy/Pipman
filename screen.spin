@@ -12,7 +12,7 @@ obj
 'All of this could probably use a refactoring, but not sure if worth the effort.  have a deadline
 
 pub Init
-  serial.init(5,4,9600)
+  serial.init(4,5,9600)
 
 pub ShowVideo
   MediaInit
