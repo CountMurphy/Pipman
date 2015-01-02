@@ -34,7 +34,7 @@ PUB start : okay
 '' Starts uart object (at baud specified) in a cog
 '' -- returns false if no cog available
 
-  okay := uart.init(serRecv,serXmit,4800)
+  okay := uart.init(serRecv,serXmit,9600)
   coginit(4,readNEMA,@gps_stack) + 1
 
 PUB readNEMA

@@ -19,6 +19,8 @@ var
   long stack[20]
 
 pub main| month,day,dow,year,hour,minute,second,go
+  dira[21]:=1
+  outa[21]:=0 'Disable GPS on start
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Init
