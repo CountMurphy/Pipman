@@ -25,6 +25,12 @@ pub main| month,day,dow,year,hour,minute,second,go
     waitcnt(clkfreq+cnt)
   SC.Init
   SC.On
+  SC.Print(string("Pipman Wristputer"))
+  SC.Position(1,0)
+  SC.Print(string("Version 1.1"))
+  repeat 2
+    waitcnt(clkfreq+cnt)
+  SC.Clear
   SC.MediaInit
   SC.ShowFrame(1)
   SC.Clear
