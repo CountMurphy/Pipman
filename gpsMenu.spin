@@ -88,7 +88,6 @@ pub main| canExit,frame
          GPS.PlaySpinnerWhileLocking(500)
          SC.FadeIn
          SC.Clear
-         'SC.Print(SN.dec(GPS.SatCount))
          Print
          GPS.Kill
          TC.WaitForBtnPress

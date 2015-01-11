@@ -131,7 +131,7 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
     return -1
 
   'error check for time and GPS parse
-  if time==0 or time==$00 or lon==0 or lon==$00 or E_W==0 or E_W==$00
+  if time==$00 or lon==$00 or E_W==$00
     SC.Clear
     return -1
 
