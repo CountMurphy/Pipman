@@ -173,8 +173,8 @@ pub SoundNotifiy
   serial.tx($FF)
   serial.tx($DA)
   serial.tx($00)
-  serial.tx($40)'note
-  serial.tx($00)
+  serial.tx($2D)'note
+  serial.tx($03)
   serial.tx($E8)'10 mili sec
   WaitForComplete
 
