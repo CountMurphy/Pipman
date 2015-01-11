@@ -44,10 +44,7 @@ PUB Run
     pressedStatus:=true
   else
     pressedStatus:=false
-pub LEDOn
 
-pub KillLed
-'  outa[ledpin]:=0
 pub isPressed
   return pressedStatus
 

@@ -60,7 +60,6 @@ pub main| month,day,dow,year,hour,minute,second,go
       ShowScreen(day,month,year,hour,minute,second,dow)
       SC.FadeOut
   '    Sen.StandBy
-      TC.KillLED
    ' if TC.isPressed == true
       timer:=0
     '  go:=true
@@ -132,7 +131,6 @@ pri DSTConfig| DST
   SC.FontSize(2)
   SC.Print(string("Yes  No"))
   SC.FontSize(1)
- TC.LEDOn
   SC.DrawRec(75,75,25,50,$F8,$00)
   DST:=true
   repeat
