@@ -34,7 +34,7 @@ PUB start : okay
 '' Starts uart object (at baud specified) in a cog
 '' -- returns false if no cog available
 
-  okay := uart.init(serRecv,serXmit,9600)
+  okay := uart.init(serRecv,serXmit,4800)
   coginit(4,readNEMA,@gps_stack) + 1
 
 PUB readNEMA
@@ -45,7 +45,7 @@ PUB readNEMA
      Rx := uart.rx              '   a complete NMEA sentence 
    cptr := 0
 
-   repeat while Rx <>= CR       '  continue to collect data until the end of the NMEA sentence 
+   repeat while Rx <>= CR and Rx <>= LF      '  continue to collect data until the end of the NMEA sentence
      Rx := uart.rx              '  get character from Rx Buffer
      if Rx == ","
        gps_buff[cptr++] := 0    '  If "," replace the character with 0

@@ -27,7 +27,7 @@ pub main| month,day,dow,year,hour,minute,second,go
   SC.On
   SC.Print(string("Pipman Wristputer"))
   SC.Position(1,0)
-  SC.Print(string("Version 1.1"))
+  SC.Print(string("Version 1.3"))
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Clear
@@ -48,7 +48,6 @@ pub main| month,day,dow,year,hour,minute,second,go
       repeat until TC.isPressed==false
         TC.Run
       go:=false
-      TC.LEDOn
       SC.ShowFrame(1) 'cant display wallpaper unless this is access first.  Odd
       SC.Clear
 
@@ -148,7 +147,6 @@ pri DSTConfig| DST
       waitcnt(clkfreq+cnt)
       SC.FadeOut
       gps.kill
-      TC.KillLed
       quit
 
     if TC.isRight == true

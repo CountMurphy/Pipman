@@ -66,4 +66,5 @@ pub PlaySpinnerWhileLocking(totalFrames)|frame
         if frame <> 700
           SC.FadeOut
           frame:=700
+  SC.SoundNotifiy
   return 0

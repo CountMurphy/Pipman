@@ -169,6 +169,14 @@ pub Click
   serial.tx($0A)'10 mili sec
   WaitForComplete
 
+pub SoundNotifiy
+  serial.tx($FF)
+  serial.tx($DA)
+  serial.tx($00)
+  serial.tx($40)'note
+  serial.tx($00)
+  serial.tx($E8)'10 mili sec
+  WaitForComplete
 
 pub DrawRec(X1,Y1,X2,Y2,colorHex1,colorHex2)
   serial.tx($FF)
