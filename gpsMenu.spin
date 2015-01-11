@@ -174,7 +174,6 @@ pub main| canExit,frame
           SC.Clear
           SC.SetByteAddr($00,$00,$00,$00)
           repeat until GPS.SatCount => 3
-            'SC.Print(SN.dec(GPS.SatCount))
             TC.Run
              if TC.isPressed ==true
                quit
@@ -187,6 +186,8 @@ pub main| canExit,frame
 
          SC.FadeIn
          SC.Clear
+         repeat until gps.isDataValid == true
+           'do nothing
          GPS.PrintStdLat
          SC.Position(1,0)
          GPS.PrintStdLong
@@ -195,6 +196,8 @@ pub main| canExit,frame
       canExit:=true
 
 pri SaveData
+  repeat until gps.isDataValid == true
+    'do nothing
   SC.SaveStr(string("$Lat:"))
   SC.SaveStr(GPS.Latitude)
   SC.SaveStr(GPS.NS)
@@ -204,6 +207,8 @@ pri SaveData
   SC.SaveStr(string("$Alt:"))
   SC.SaveStr(GPS.PrintAlt)
 pri Print
+  repeat until gps.isDataValid == true
+    'do nothing
   SC.Print(GPS.Latitude)
   SC.Print(GPS.NS)
   SC.Position(1,0)

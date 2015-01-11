@@ -68,3 +68,10 @@ pub PlaySpinnerWhileLocking(totalFrames)|frame
           frame:=700
   SC.SoundNotifiy
   return 0
+
+  'Not to be used with date time checking.  Have seperate parsing checks in Timezone class...for reasons
+pub isDataValid
+  if gps.GPSaltitude ==$00 or gps.Longitude==$00 or gps.E_W==$00 or gps.Latitude == $00 or gps.N_S == $00
+    return false
+  else
+    return true
