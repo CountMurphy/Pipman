@@ -14,7 +14,7 @@ obj
 var
   long  currentItem
 
-pub main| canExit,frame
+pub main| canExit,frame, retVal
   frame:=0
   SC.Init
   SC.Clear
@@ -85,7 +85,9 @@ pub main| canExit,frame
         single:
          GPS.Init
          SC.SetByteAddr($00,$00,$00,$00)
-         GPS.PlaySpinnerWhileLocking(500)
+         retVal:=GPS.PlaySpinnerWhileLocking(500)
+         if retVal == -1
+          return
          SC.FadeIn
          SC.Clear
          Print
@@ -100,7 +102,7 @@ pub main| canExit,frame
             TC.Run
             if TC.isPressed ==true
               GPS.Kill
-              quit
+              return
           SC.FadeIn
           SC.Clear
           'prepare card
@@ -120,9 +122,8 @@ pub main| canExit,frame
           GPS.Init
 
           'wait for connection
-          GPS.PlaySpinnerWhileLocking(250)
-            TC.Run
-            if TC.isPressed==true
+          retVal:=GPS.PlaySpinnerWhileLocking(250)
+            if retVal==-1
               SC.On
               SC.Clear
               SC.Print(string("Aborted"))
@@ -139,7 +140,7 @@ pub main| canExit,frame
             repeat until GPS.SatCount => 3
                TC.Run
                if TC.isPressed==true
-                 quit
+                 return
             SaveData
             GPS.Kill
             repeat 60
@@ -167,32 +168,28 @@ pub main| canExit,frame
           SC.Clear
           SC.Print(string("Warning, not accurate"))
           SC.Position(1,0)
-          SC.Print(string("up to 50 meters"))
+          SC.Print(string("might put you"))
+          SC.Position(2,0)
+          SC.Print(string("in the right city"))
           SC.Position(0,0)
           waitcnt(clkfreq+cnt)
           waitcnt(clkfreq+cnt)
           SC.Clear
           SC.SetByteAddr($00,$00,$00,$00)
-          repeat until GPS.SatCount => 3
-            TC.Run
-             if TC.isPressed ==true
-               quit
-             else
-               if frame < 500
-                 SC.ShowFrame(frame)
-                 frame++
-               else
-                 SC.FadeOut
-
-         SC.FadeIn
-         SC.Clear
-         repeat until gps.isDataValid == true
-           'do nothing
-         GPS.PrintStdLat
-         SC.Position(1,0)
-         GPS.PrintStdLong
-         GPS.Kill
-         TC.WaitForBtnPress
+          retVal:=gps.PlaySpinnerWhileLocking(250)
+          if retVal==-1
+            return
+          SC.FadeIn
+          SC.Clear
+          repeat until gps.isDataValid == true
+           TC.Run
+            if TC.isPressed==true
+              return
+          GPS.PrintStdLat
+          SC.Position(1,0)
+          GPS.PrintStdLong
+          GPS.Kill
+          TC.WaitForBtnPress
       canExit:=true
 
 pri SaveData
@@ -206,6 +203,7 @@ pri SaveData
   SC.SaveStr(GPS.EW)
   SC.SaveStr(string("$Alt:"))
   SC.SaveStr(GPS.PrintAlt)
+  SC.SoundNotifiy
 pri Print
   repeat until gps.isDataValid == true
     'do nothing

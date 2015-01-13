@@ -27,7 +27,7 @@ pub main| month,day,dow,year,hour,minute,second,go
   SC.On
   SC.Print(string("Pipman Wristputer"))
   SC.Position(1,0)
-  SC.Print(string("Version 1.3"))
+  SC.Print(string("Version 1.42"))
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Clear
