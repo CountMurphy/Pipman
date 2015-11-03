@@ -33,7 +33,7 @@ pub main| month,day,dow,year,hour,minute,second,go
   SC.Position(1,0)
   SC.Print(string("Name Subject To Change"))
   SC.Position(3,0)
-  SC.Print(string("Version 1.44"))
+  SC.Print(string("Version 1.45"))
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Clear
@@ -69,6 +69,22 @@ pub main| month,day,dow,year,hour,minute,second,go
    ' if TC.isPressed == true
       timer:=0
     '  go:=true
+    if TC.isUp==true
+      SC.Contrast(1)
+      SC.Clear
+      SC.Contrast(2)
+      repeat until TC.isUp==false
+        SC.TxtColor($FF,$E0)
+        SC.Position(7,6)
+        SC.FontSize(2)
+        Rtc.readTime(@hour,@minute,@second)
+        SC.TxtBackColor($00,$00)
+        SC.Print(SN.decx(hour,2))
+        SC.Print(string(":"))
+        SC.Print(SN.decx(minute,2))
+        SC.FontSize(1)
+        TC.Run
+      SC.Off
 
 
 pri ShowScreen(day,month,year,hour,minute,second,dow)| exitCode
