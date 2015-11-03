@@ -21,6 +21,10 @@ var
 pub main| month,day,dow,year,hour,minute,second,go
   dira[21]:=1
   outa[21]:=0 'Disable GPS on start
+  dira[31]:=1
+  dira[30]:=1
+  outa[31]:=0
+  outa[30]:=0
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Init
@@ -29,7 +33,7 @@ pub main| month,day,dow,year,hour,minute,second,go
   SC.Position(1,0)
   SC.Print(string("Name Subject To Change"))
   SC.Position(3,0)
-  SC.Print(string("Version 1.43"))
+  SC.Print(string("Version 1.44"))
   repeat 2
     waitcnt(clkfreq+cnt)
   SC.Clear
