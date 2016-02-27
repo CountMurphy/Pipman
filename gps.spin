@@ -46,7 +46,7 @@ pub Kill
   outa[_GPSPwr]:=0
 pub ProcessLocalDateTime(DST)|goOn
   SC.SetByteAddr($00,$00,$00,$00)
-  goOn:=PlaySpinnerWhileLocking(500)
+  goOn:=PlaySpinnerWhileLocking(400)
   if goOn==0
     repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1
 

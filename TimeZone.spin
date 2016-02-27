@@ -52,7 +52,7 @@ pub GetTimeZone(lon,E_W) | decVal,offset
 
 
 
-pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,year,offset,dow
+pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,year,offset,dow, UTCHour, UTCMin, UTCDay, UTCMonth, UTCYear
   hour:=0
   minute:=0
   second:=0
@@ -61,55 +61,36 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
   year:=0
   offset:=0
   dow:=0
-  SC.Init
-  SC.On
-  SC.FontSize(1)
-  SC.Print(string("Sat Lock..."))
-  waitcnt(clkfreq+cnt)
-  SC.Clear
+
 
   hour:=str3.strParse(time,0,2)
-  SC.Print(hour)
+  UTCHour:=hour
+
   hour:=cn.Convert_ascii_string_to_fp(hour)
-  SC.Position(1,0)
-  SC.Print(time)
+
   minute:=str3.strParse(time,2,2)
-  SC.Position(2,0)
-  SC.Print(minute)
+  UTCmin:=minute
+
   minute:=cn.Convert_ascii_string_to_fp(minute)
   second:=str3.strParse(time,4,2)
-  SC.Position(3,0)
-  SC.Print(second)
   second:=cn.Convert_ascii_string_to_fp(second)
 
   'Dates
 
-  waitcnt(clkfreq+cnt)
-  SC.Clear
-  'dates
-  SC.Position(0,0)
+
   day:=str3.strParse(date,0,2)
-  SC.Print(day)
+  UTCDay:=day
+
   day:=cn.Convert_ascii_string_to_fp(day)
-  SC.Position(1,0)
-  SC.Print(date)
+
   month:=str3.strParse(date,2,2)
-  SC.Position(2,0)
-  SC.Print(month)
+  UTCMonth:=month
+
   month:=cn.Convert_ascii_string_to_fp(month)
-  SC.Position(3,0)
-  SC.Print(date)
+
   year:=str3.strParse(date,4,2)
+  UTCYear:=year
   year:=cn.Convert_ascii_string_to_fp(year)
-  SC.Position(4,0)
-  SC.Print(year)
-  SC.Position(5,0)
-  SC.Print(date)
-
-
-  waitcnt(clkfreq+cnt)
-  waitcnt(clkfreq+cnt)
-  waitcnt(clkfreq+cnt)
 
 
   offset:=GetTimeZone(lon,E_W)
@@ -127,14 +108,20 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
 
   'error check for date parse.  Not sure if code is to blame or poor connection to test gps
   if day==0 or month==0 or year==0 or month > 12 or day >31
-    SC.Clear
     return -1
 
   'error check for time and GPS parse
   if time==$00 or lon==$00 or E_W==$00
-    SC.Clear
     return -1
 
+  rtc.init(17,16,18)
+  rtc.config
+  dow:=cn.DateToDOW(adjMonth,adjDay,adjYear)
+  SC.Print(string("  "))
+  SC.Print(SN.Dec(dow))
+  rtc.setDatetime(adjMonth,adjDay,adjYear,dow,hour,minute,second)
+
+  printDebugInfo(UTCHour,UTCMin,UTCMonth,UTCDay,UTCYear, time,date)
   SC.Clear
   SC.Position(0,0)
   SC.Print(SN.Dec(hour))
@@ -153,13 +140,6 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
   SC.Print(SN.dec(year))
   SC.Position(2,0)
   SC.Print(date)
-
-  rtc.init(17,16,18)
-  rtc.config
-  dow:=cn.DateToDOW(adjMonth,adjDay,adjYear)
-  SC.Print(string("  "))
-  SC.Print(SN.Dec(dow))
-  rtc.setDatetime(adjMonth,adjDay,adjYear,dow,hour,minute,second)
 
   return 0
 
@@ -361,3 +341,33 @@ pri rewindDays(month,year)| day
         day:=28
    other: day:=31
   return day
+
+pri printDebugInfo(hour,minute,month,day,year, time,date)
+  SC.Init
+  SC.On
+  SC.FontSize(1)
+  SC.Print(string("Sat Lock..."))
+  waitcnt(clkfreq+cnt)
+  SC.Clear
+  SC.Print(hour)
+  SC.Position(1,0)
+  SC.Print(time)
+  SC.Position(2,0)
+  SC.Print(minute)
+
+  waitcnt(clkfreq+cnt)
+  SC.Clear
+  'dates
+  SC.Position(0,0)
+  SC.Print(day)
+  SC.Position(1,0)
+  SC.Print(date)
+  SC.Position(2,0)
+  SC.Print(month)
+  SC.Position(3,0)
+  SC.Print(year)
+
+  waitcnt(clkfreq+cnt)
+  waitcnt(clkfreq+cnt)
+  waitcnt(clkfreq+cnt)
+  SC.Clear
