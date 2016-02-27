@@ -44,11 +44,22 @@ pub PrintAlt
 pub Kill
   gps.stop
   outa[_GPSPwr]:=0
-pub ProcessLocalDateTime(DST)|goOn
+pub ProcessLocalDateTime(DST)|goOn, failCount
+  failCount:=0
   SC.SetByteAddr($00,$00,$00,$00)
   goOn:=PlaySpinnerWhileLocking(400)
   if goOn==0
     repeat until tz.ParseCurrentDateTime(gps.time,gps.date,gps.longitude,gps.E_W,DST) <> -1
+      failCount:=failCount+1
+      if failCount=>6
+        'reset gps and try again
+        failCount:=0
+        Kill
+        waitcnt(clkfreq+cnt)
+        Init
+      else
+        waitcnt(clkfreq+cnt)
+    SC.SoundNotifiy
 
 pub PlaySpinnerWhileLocking(totalFrames)|frame
   frame:=0
