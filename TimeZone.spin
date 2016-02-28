@@ -52,7 +52,7 @@ pub GetTimeZone(lon,E_W) | decVal,offset
 
 
 
-pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,year,offset,dow, UTCHour, UTCMin, UTCDay, UTCMonth, UTCYear
+pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,year,offset,dow, UTCHour, UTCMin, UTCDay, UTCMonth, UTCYear, temp
   hour:=0
   minute:=0
   second:=0
@@ -92,6 +92,15 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
   UTCYear:=year
   year:=cn.Convert_ascii_string_to_fp(year)
 
+  'error check for date parse.  Not sure if code is to blame or poor connection to test gps
+  temp:=cn.Convert_ascii_string_to_fp(lon)
+  if day==0 or month==0 or year==0 or month > 12 or day >31
+    return -1
+
+  'error check for time and GPS parse
+  if time==$00 or temp==$00 or E_W==$00
+    return -1
+
 
   offset:=GetTimeZone(lon,E_W)
   if DST == true
@@ -106,13 +115,6 @@ pub ParseCurrentDateTime(time,date,lon,E_W,DST) |hour,minute,second,month,day,ye
   'adjust for time zone
   hour:=ajustTime(hour,offset)
 
-  'error check for date parse.  Not sure if code is to blame or poor connection to test gps
-  if day==0 or month==0 or year==0 or month > 12 or day >31
-    return -1
-
-  'error check for time and GPS parse
-  if time==$00 or lon==$00 or E_W==$00
-    return -1
 
   rtc.init(17,16,18)
   rtc.config
